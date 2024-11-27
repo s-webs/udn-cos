@@ -5,13 +5,13 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
+    return redirect()->to(route('login'));
 });
+Route::get('/terminal', [\App\Http\Controllers\GuestController::class, 'terminal'])->name('terminal');
+Route::get('/monitoring', [\App\Http\Controllers\GuestController::class, 'monitoring'])->name('monitoring');
+Route::get('/digital-queue', [\App\Http\Controllers\GuestController::class, 'mobileCategories'])->name('mobileCategories');
+
+
 
 Route::middleware([
     'auth:sanctum',
