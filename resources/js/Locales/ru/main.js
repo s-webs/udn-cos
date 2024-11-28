@@ -51,4 +51,8 @@ export default {
     expected: 'Вас ожидают',
     complete: 'Готово',
     rejected: 'Отклонен',
+
+    skipTicket: 'Пропустить',
+    rejectTicket: 'Отклонить',
+    ticketNotAssign: 'Талон не назначен',
 }

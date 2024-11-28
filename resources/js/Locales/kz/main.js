@@ -50,4 +50,8 @@ export default {
     expected: 'Сізді күтеді',
     complete: 'Дайын',
     rejected: 'Қабылданбады',
+
+    skipTicket: 'Өткізіп жіберу',
+    rejectTicket: 'Бас тарту',
+    ticketNotAssign: 'Талон тағайындалмаған',
 }

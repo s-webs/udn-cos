@@ -70,4 +70,9 @@ class User extends Authenticatable
         return $this->belongsToMany(Table::class, 'user_table')
             ->withTimestamps();
     }
+
+    public function ticketAssignments(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(TicketAssignment::class);
+    }
 }

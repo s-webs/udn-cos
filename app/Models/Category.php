@@ -16,4 +16,9 @@ class Category extends Model
     {
         return $this->belongsToMany(Table::class);
     }
+
+    public function tickets(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Ticket::class);
+    }
 }

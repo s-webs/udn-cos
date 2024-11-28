@@ -23,4 +23,9 @@ class Table extends Model
         return $this->belongsToMany(User::class, 'user_table')
             ->withTimestamps();
     }
+
+    public function assignments(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(TicketAssignment::class);
+    }
 }
