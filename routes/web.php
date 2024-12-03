@@ -37,6 +37,9 @@ Route::middleware([
     Route::post('/tickets/{id}/complete', [\App\Http\Controllers\TicketController::class, 'completeTicket'])->name('tickets.complete');
     Route::get('/tickets/current', [\App\Http\Controllers\TicketController::class, 'getCurrentTicket'])->name('tickets.current');
     Route::post('/tickets/assign', [\App\Http\Controllers\TicketController::class, 'assignNextTicket'])->name('tickets.assign');
-    Route::post('/tickets/{id}/skip', [\App\Http\Controllers\TicketController::class, 'skipTicket'])->name('tickets.skip');
-    Route::post('/tickets/{id}/reject', [\App\Http\Controllers\TicketController::class, 'rejectTicket'])->name('tickets.reject');
+
+    Route::get('/tickets', [\App\Http\Controllers\TicketController::class, 'index'])->name('tickets.index');
+    Route::post('/tickets/skip/{id}', [\App\Http\Controllers\TicketController::class, 'skipTicket'])->name('tickets.skip');
+    Route::post('/tickets/reject/{id}', [\App\Http\Controllers\TicketController::class, 'rejectTicket'])->name('tickets.reject');
+    Route::post('/tickets/clear-queue', [\App\Http\Controllers\TicketController::class, 'clearQueue'])->name('tickets.clearQueue');
 });

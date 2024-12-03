@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\QueueCleared;
 use App\Events\TicketAssigned;
 use App\Events\TicketUpdated;
 use App\Models\Category;
@@ -10,10 +11,25 @@ use App\Models\Ticket;
 use App\Models\TicketAssignment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
 
 class TicketController extends Controller
 {
+    public function index(Request $request)
+    {
+        $categoryIds = $request->query('category_ids', []);
+
+        $tickets = Ticket::with('category')
+            ->where('status', 'waiting')
+            ->whereIn('category_id', $categoryIds)
+            ->orderBy('ticket_number')
+            ->get();
+
+        return response()->json(['tickets' => $tickets]);
+    }
+
+
     public function create($categoryId, $locale)
     {
         $category = Category::query()->findOrFail($categoryId);
@@ -150,25 +166,50 @@ class TicketController extends Controller
         }
     }
 
-    public function skipTicket(Request $request, $id)
+    public function skipTicket($id)
     {
-        $ticket = Ticket::query()->findOrFail($id);
-
-        $ticket->update(['status' => 'skipped']);
+        $ticketAssignment = TicketAssignment::query()->findOrFail($id);
+        $ticketAssignment->update(['status' => 'skipped']);
+        $ticketAssignment->ticket->update(['status' => 'waiting']);
+        $ticket = $ticketAssignment->ticket;
+        $ticketAssignment->delete();
 
         event(new TicketUpdated($ticket));
 
-        return response()->json(['message' => 'Талон пропущен', 'ticket' => $ticket]);
+        return response()->json(['message' => 'Талон пропущен.']);
     }
 
-    public function rejectTicket(Request $request, $id)
+
+    public function rejectTicket($id)
     {
-        $ticket = Ticket::query()->findOrFail($id);
+        $ticketAssignment = TicketAssignment::query()->findOrFail($id);
+        $ticketAssignment->update(['status' => 'rejected']);
+        $ticketAssignment->ticket->update(['status' => 'rejected']);
 
-        $ticket->update(['status' => 'rejected']);
+        event(new TicketUpdated($ticketAssignment->ticket));
 
-        event(new TicketUpdated($ticket));
-
-        return response()->json(['message' => 'Талон отклонен', 'ticket' => $ticket]);
+        return response()->json(['message' => 'Талон отклонен.']);
     }
+
+    public function clearQueue(Request $request)
+    {
+        $categoryIds = $request->input('category_ids', []);
+
+        $tickets = Ticket::whereIn('category_id', $categoryIds)
+            ->where('status', 'waiting')
+            ->get();
+
+        foreach ($tickets as $ticket) {
+            $ticket->update(['status' => 'cancelled']);
+            event(new TicketUpdated($ticket));
+            $ticket->delete();
+        }
+
+        // Транслируем событие очистки очереди
+        event(new QueueCleared($categoryIds));
+
+        return response()->json(['message' => 'Очередь очищена.']);
+    }
+
+
 }

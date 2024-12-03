@@ -68,7 +68,6 @@ const totalTicketsInQueue = computed(() => tickets.length);
 const fetchCurrentTicket = () => {
     axios.get(route('tickets.current', {table_id: selectedTable.value}))
         .then(response => {
-            console.log(response.data)
             currentTicket.value = response.data.currentAssignment;
         })
         .catch(error => {
@@ -81,8 +80,9 @@ const fetchCurrentTicket = () => {
 
 onMounted(() => {
     fetchCurrentTicket();
-    window.Echo.channel('tickets')
-        .listen('TicketCreated', (e) => {
+    fetchTickets();
+    window.Echo.channel("tickets")
+        .listen("TicketCreated", (e) => {
             const ticketData = e;
 
             if (assignedCategoryIds.value.includes(ticketData.category_id)) {
@@ -90,22 +90,54 @@ onMounted(() => {
                 tickets.sort((a, b) => a.ticket_number - b.ticket_number);
             }
         })
-        .listen('TicketUpdated', (e) => {
+        .listen("TicketUpdated", (e) => {
             const ticketData = e;
+
+            console.log("Получено событие TicketUpdated:", ticketData); // Для отладки
+
+            // Определяем categoryId
+            const categoryId = ticketData.category_id || (ticketData.category && ticketData.category.id);
+
+            // Если categoryId всё ещё не определен, выводим предупреждение и прекращаем обработку
+            if (!categoryId) {
+                console.warn(`Талон с id ${ticketData.id} не имеет category_id или category.id.`);
+                return;
+            }
 
             // Если талон изменил статус и больше не ожидает, удаляем его из списка
             if (
-                ['processing', 'completed', 'skipped', 'rejected'].includes(
+                ["processing", "completed", "skipped", "rejected", "cancelled"].includes(
                     ticketData.status
                 )
             ) {
                 const index = tickets.findIndex((ticket) => ticket.id === ticketData.id);
                 if (index !== -1) {
                     tickets.splice(index, 1);
+                    console.log(`Талон с id ${ticketData.id} удален из очереди.`);
+                }
+            } else if (ticketData.status === "waiting") {
+                // Если талон снова в ожидании, добавляем его обратно в список
+                if (assignedCategoryIds.value.includes(categoryId)) {
+                    // Проверяем, существует ли уже такой тикет в списке, чтобы избежать дубликатов
+                    const exists = tickets.some(ticket => ticket.id === ticketData.id);
+                    if (!exists) {
+                        tickets.push(ticketData);
+                        tickets.sort((a, b) => a.ticket_number - b.ticket_number);
+                        console.log(`Талон с id ${ticketData.id} добавлен обратно в очередь.`);
+                    }
                 }
             }
+        })
+        .listen("QueueCleared", (e) => {
+            const clearedCategoryIds = e.categoryIds;
+            const isAffected = assignedCategoryIds.value.some(categoryId =>
+                clearedCategoryIds.includes(categoryId)
+            );
+            if (isAffected) {
+                tickets.splice(0, tickets.length);
+            }
         });
-})
+});
 
 onUnmounted(() => {
     window.Echo.leaveChannel('tickets');
@@ -152,6 +184,79 @@ const nextTicket = () => {
             console.error('Ошибка при завершении текущего талона:', error);
         });
 };
+
+const fetchTickets = () => {
+    if (assignedCategoryIds.value.length === 0) {
+        tickets.splice(0, tickets.length);
+        return;
+    }
+
+    axios
+        .get(route("tickets.index"), {
+            params: {
+                category_ids: assignedCategoryIds.value,
+            },
+        })
+        .then((response) => {
+            tickets.splice(0, tickets.length, ...response.data.tickets);
+        })
+        .catch((error) => {
+            console.error("Ошибка при получении списка талонов:", error);
+        });
+};
+
+
+const skipTicket = () => {
+    if (!currentTicket.value) {
+        alert('Нет текущего талона для пропуска.');
+        return;
+    }
+
+    axios.post(route('tickets.skip', currentTicket.value.id))
+        .then(() => {
+            currentTicket.value = null;
+            fetchTickets();
+        })
+        .catch(error => {
+            console.error('Ошибка при пропуске талона:', error);
+        });
+};
+
+const rejectTicket = () => {
+    if (!currentTicket.value) {
+        alert('Нет текущего талона для отклонения.');
+        return;
+    }
+
+    axios.post(route('tickets.reject', currentTicket.value.id))
+        .then(() => {
+            // Сбрасываем текущий талон
+            currentTicket.value = null;
+            // Обновляем список талонов
+            fetchTickets();
+        })
+        .catch(error => {
+            console.error('Ошибка при отклонении талона:', error);
+        });
+};
+
+const clearQueue = () => {
+    if (!selectedTable.value) {
+        alert('Пожалуйста, выберите стол перед очисткой очереди.');
+        return;
+    }
+
+    axios.post(route('tickets.clearQueue'), {category_ids: assignedCategoryIds.value})
+        .then(() => {
+            // Очищаем список талонов
+            tickets.splice(0, tickets.length);
+            alert('Очередь успешно очищена.');
+        })
+        .catch(error => {
+            console.error('Ошибка при очистке очереди:', error);
+        });
+};
+
 
 </script>
 
@@ -202,9 +307,8 @@ const nextTicket = () => {
                 </button>
             </div>
             <div class="flex gap-4">
-                <button class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg">{{
-                        t('main.clearQueue')
-                    }}
+                <button @click="clearQueue" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg">
+                    {{ t('main.clearQueue') }}
                 </button>
                 <button class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg">{{
                         t('main.closeQueue')
