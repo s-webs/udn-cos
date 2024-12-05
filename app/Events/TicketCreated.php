@@ -33,11 +33,6 @@ class TicketCreated implements ShouldBroadcast
             new Channel('tickets')
         ];
     }
-//
-//    public function broadcastAs(): string
-//    {
-//        return 'TicketCreated';
-//    }
 
     public function broadcastWith(): array
     {

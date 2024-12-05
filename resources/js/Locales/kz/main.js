@@ -10,6 +10,7 @@ export default {
     // GUEST TERMINAL SCREEN
     welcomeScan: 'Мобильді құрылғыда санатты таңдау үшін сканерлеңіз',
     ticketScan: 'Сандық талонды алу үшін QR кодын сканерлеңіз',
+    queueClosedMessage: 'Кешірім сұраймыз, қазіргі уақытта кезек жабық',
 
     // ADMIN SIDEBAR MENU
     dashboard: 'Басқару тақтасы',
@@ -29,6 +30,9 @@ export default {
     selectTable: 'Үстелді таңдаңыз',
     selectedTable: 'Кесте таңдалды',
     linkedCategories: 'Байланысты санаттар',
+    queueOpen: 'Кезекті ашыңыз',
+    queueStatusClosed: 'Қазіргі уақытта кезек жабық',
+
 
     // ADMIN CATEGORY SCREEN
     creatingCategory: 'Жаңа санатты құру',

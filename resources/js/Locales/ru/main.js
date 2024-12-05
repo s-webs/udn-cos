@@ -10,6 +10,7 @@ export default {
     // GUEST TERMINAL SCREEN
     welcomeScan: 'Отсканируйте для выбора категории на мобильном устройстве',
     ticketScan: 'Отсканируйте QR код, чтобы получить цифровой талон',
+    queueClosedMessage: 'Приносим свои извинения, в данный момент очередь закрыта',
 
     // SIDEBAR MENU
     dashboard: 'Панель управления',
@@ -30,6 +31,9 @@ export default {
     selectTable: 'Выбрать стол',
     selectedTable: 'Стол выбран',
     linkedCategories: 'Привязанные категории',
+
+    queueOpen: 'Открыть очередь',
+    queueStatusClosed: 'В данный момент очередь закрыта',
 
     // ADMIN CATEGORY SCREEN
     creatingCategory: 'Создание новой категории',
