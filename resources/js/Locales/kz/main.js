@@ -75,4 +75,12 @@ export default {
     statUsers: 'Пайдаланушылар бойынша статистика',
     total: 'Жалпы саны',
     downloadPdf: 'PDF жүктеп алыңыз',
+
+    // Users
+    users: 'Пайдаланушылар',
+    usersManagement: 'Пайдаланушыларды басқару',
+    name: 'Аты',
+    password: 'Құпия сөз',
+    leaveEmpty: 'өзгермесе бос қалдырыңыз',
+    confirmDeleteUser: 'Пайдаланушыны жою?',
 }

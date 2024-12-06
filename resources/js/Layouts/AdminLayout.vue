@@ -77,12 +77,21 @@ if (localStorage.getItem('language')) {
                     <!-- Отчеты -->
                     <Link :href="route('reports.index')"
                           :class="{
-                'p-2 rounded-lg text-white cursor-pointer bg-slate-500 hover:bg-slate-400 border-2': route().current('tables'),
-                'p-2 rounded-lg text-white cursor-pointer bg-slate-500 hover:bg-slate-400 border-2 border-slate-500': !route().current('tables')
+                'p-2 rounded-lg text-white cursor-pointer bg-slate-500 hover:bg-slate-400 border-2': route().current('reports.index'),
+                'p-2 rounded-lg text-white cursor-pointer bg-slate-500 hover:bg-slate-400 border-2 border-slate-500': !route().current('reports.index')
             }"
                     >
-                        <font-awesome-icon :icon="['fas', 'table-cells-large']"/>
+                        <font-awesome-icon :icon="['fas', 'chart-simple']" />
                         {{ t('main.reports') }}
+                    </Link>
+                    <Link :href="route('users.index')"
+                          :class="{
+                'p-2 rounded-lg text-white cursor-pointer bg-slate-500 hover:bg-slate-400 border-2': route().current('users.index'),
+                'p-2 rounded-lg text-white cursor-pointer bg-slate-500 hover:bg-slate-400 border-2 border-slate-500': !route().current('users.index')
+            }"
+                    >
+                        <font-awesome-icon :icon="['fas', 'users']" />
+                        {{ t('main.users') }}
                     </Link>
                 </div>
             </div>

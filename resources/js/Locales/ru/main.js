@@ -76,4 +76,12 @@ export default {
     statUsers: 'Статистика по пользователям',
     total: 'Общее количество',
     downloadPdf: 'Скачать PDF',
+
+    // Users
+    users: 'Пользователи',
+    usersManagement: 'Управление пользователями',
+    name: 'Имя',
+    password: 'Пароль',
+    leaveEmpty: 'оставьте пустым если не меняется',
+    confirmDeleteUser: 'Удалить пользователя?',
 }

@@ -49,4 +49,51 @@ Route::middleware([
 
     Route::get('/reports', [\App\Http\Controllers\ReportController::class, 'index'])->name('reports.index');
     Route::post('/reports/generate', [\App\Http\Controllers\ReportController::class, 'generate'])->name('reports.generate');
+
+    Route::get('/users', [\App\Http\Controllers\UsersController::class, 'index'])->name('users.index');
+    Route::post('/users', [\App\Http\Controllers\UsersController::class, 'store'])->name('users.store');
+    Route::patch('/users/{user}', [\App\Http\Controllers\UsersController::class, 'update'])->name('users.update');
+    Route::delete('/users/{user}', [\App\Http\Controllers\UsersController::class, 'destroy'])->name('users.destroy');
+});
+
+
+Route::get('/forgot-password', function () {
+    abort(404);
+});
+Route::post('/forgot-password', function () {
+    abort(404);
+});
+Route::get('/register', function () {
+    abort(404);
+});
+Route::post('/register', function () {
+    abort(404);
+});
+Route::get('/reset-password', function () {
+    abort(404);
+});
+Route::post('/reset-password/{token}', function () {
+    abort(404);
+});
+
+Route::get('/two-factor-challenge', function () {
+    abort(404);
+});
+
+Route::post('/two-factor-challenge', function () {
+    abort(404);
+});
+
+Route::delete('/user', function () {
+    abort(404);
+});
+Route::get('user/confirm-password', function () {
+    abort(404);
+});
+Route::post('user/confirm-password', function () {
+    abort(404);
+});
+
+Route::get('/user/confirmed-password-status', function () {
+    abort(404);
 });

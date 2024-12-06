@@ -19,7 +19,7 @@ const currentId = ref(null)
 const editedCategory = ref(null)
 
 const localizedCategoryName = (category) => {
-    return category[`name_${locale.value}`] || category.name_ru; // Фоллбек на name_ru
+    return category[`name_${locale.value}`] || category.name_ru;
 };
 
 const form = useForm({
