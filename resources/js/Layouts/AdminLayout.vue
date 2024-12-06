@@ -66,13 +66,23 @@ if (localStorage.getItem('language')) {
 
                     <!-- Столы -->
                     <Link :href="route('tables')"
-                         :class="{
+                          :class="{
                 'p-2 rounded-lg text-white cursor-pointer bg-slate-500 hover:bg-slate-400 border-2': route().current('tables'),
                 'p-2 rounded-lg text-white cursor-pointer bg-slate-500 hover:bg-slate-400 border-2 border-slate-500': !route().current('tables')
             }"
                     >
                         <font-awesome-icon :icon="['fas', 'table-cells-large']"/>
                         {{ t('main.tables') }}
+                    </Link>
+                    <!-- Отчеты -->
+                    <Link :href="route('reports.index')"
+                          :class="{
+                'p-2 rounded-lg text-white cursor-pointer bg-slate-500 hover:bg-slate-400 border-2': route().current('tables'),
+                'p-2 rounded-lg text-white cursor-pointer bg-slate-500 hover:bg-slate-400 border-2 border-slate-500': !route().current('tables')
+            }"
+                    >
+                        <font-awesome-icon :icon="['fas', 'table-cells-large']"/>
+                        {{ t('main.reports') }}
                     </Link>
                 </div>
             </div>
@@ -81,13 +91,13 @@ if (localStorage.getItem('language')) {
             <div class="bg-slate-600 flex flex-row items-center justify-between p-4 rounded-lg">
                 <div class="flex flex-row gap-4">
                     <button v-for="(lang, key) in languages" @click="changeLanguage(key)"
-                        class="bg-slate-500 hover:bg-slate-400 text-center content-center w-8 h-8 rounded-sm text-white">
+                            class="bg-slate-500 hover:bg-slate-400 text-center content-center w-8 h-8 rounded-sm text-white">
                         {{ lang }}
                     </button>
                 </div>
                 <div class="flex flex-row items-center gap-4">
                     <div class="text-lg text-white">
-                        {{ user.name}}
+                        {{ user.name }}
                     </div>
                     <button
                         @click.prevent="logout"

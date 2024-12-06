@@ -59,4 +59,21 @@ export default {
     skipTicket: 'Пропустить',
     rejectTicket: 'Отклонить',
     ticketNotAssign: 'Талон не назначен',
+
+    // Reports
+    reports: 'Отчеты',
+    generateReport: 'Сформировать отчет',
+    today: 'Сегодня',
+    week: 'Неделя',
+    month: 'Месяц',
+    halfYear: 'Полугодие',
+    year: 'Год',
+    period: 'Период',
+    dateStart: 'Дата начала',
+    dateEnd: 'Дата окончания',
+    udn: 'Университет дружбы народов имени академика А.Куатбекова',
+    statCategories: 'Статистика по категориям',
+    statUsers: 'Статистика по пользователям',
+    total: 'Общее количество',
+    downloadPdf: 'Скачать PDF',
 }

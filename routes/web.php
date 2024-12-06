@@ -46,4 +46,7 @@ Route::middleware([
     Route::post('/tickets/clear-queue', [\App\Http\Controllers\TicketController::class, 'clearQueue'])->name('tickets.clearQueue');
 
     Route::post('/queue/toggle', [\App\Http\Controllers\QueueController::class, 'toggleQueueStatus'])->name('queue.toggle');
+
+    Route::get('/reports', [\App\Http\Controllers\ReportController::class, 'index'])->name('reports.index');
+    Route::post('/reports/generate', [\App\Http\Controllers\ReportController::class, 'generate'])->name('reports.generate');
 });

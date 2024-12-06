@@ -58,4 +58,21 @@ export default {
     skipTicket: 'Өткізіп жіберу',
     rejectTicket: 'Бас тарту',
     ticketNotAssign: 'Талон тағайындалмаған',
+
+    // Reports
+    reports: 'Есептер',
+    generateReport: 'Есепті қалыптастыру',
+    today: 'Бүгін',
+    week: 'Апта',
+    month: 'Ай',
+    halfYear: 'Жартыжылдық',
+    year: 'Жыл',
+    period: 'Кезең',
+    dateStart: 'Басталу күні',
+    dateEnd: 'Аяқталу күні',
+    udn: 'Академик Ә.Қуатбеков атындағы Халықтар достығы университеті',
+    statCategories: 'Санаттар бойынша статистика',
+    statUsers: 'Пайдаланушылар бойынша статистика',
+    total: 'Жалпы саны',
+    downloadPdf: 'PDF жүктеп алыңыз',
 }

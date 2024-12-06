@@ -27,6 +27,11 @@
         "@fortawesome/free-regular-svg-icons": "^6.7.1",
         "@fortawesome/free-solid-svg-icons": "^6.7.1",
         "@fortawesome/vue-fontawesome": "^3.0.8",
+        "dayjs": "^1.11.13",
+        "html2pdf.js": "^0.10.2",
+        "jspdf": "^2.5.2",
+        "jspdf-autotable": "^3.8.4",
+        "pdfmake": "^0.2.15",
         "qrcode.vue": "^3.6.0",
         "vue-i18n": "^10.0.4"
     }
