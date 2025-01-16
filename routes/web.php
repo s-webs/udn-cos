@@ -15,6 +15,7 @@ Route::get('/tickets/client/{id}', [\App\Http\Controllers\GuestController::class
 
 Route::get('/ticket/{categoryId}/{locale}', [\App\Http\Controllers\TicketController::class, 'create'])->name('digitalTicket-create');
 Route::get('/digital-ticket/{ticketId}/{locale}', [\App\Http\Controllers\TicketController::class, 'show'])->name('digitalTicket-show');
+Route::get('/tickets/queue-count/{categoryId}', [\App\Http\Controllers\TicketController::class, 'queueCount'])->name('tickets.queueCount');
 
 Route::get('/queue/status', [\App\Http\Controllers\QueueController::class, 'getQueueStatus'])->name('queue.status');
 

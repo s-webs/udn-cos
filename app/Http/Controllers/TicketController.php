@@ -211,5 +211,15 @@ class TicketController extends Controller
         return response()->json(['message' => 'Очередь очищена.']);
     }
 
+    public function queueCount($categoryId)
+    {
+        // Считаем количество тикетов со статусом waiting в этой категории
+        $count = Ticket::query()->where('category_id', $categoryId)
+            ->where('status', 'waiting')
+            ->count();
+
+        return response()->json(['count' => $count]);
+    }
+
 
 }

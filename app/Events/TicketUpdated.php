@@ -30,6 +30,7 @@ class TicketUpdated implements ShouldBroadcast
 
         return [
             'id' => $this->ticket->id,
+            'category_id' => $this->ticket->category_id,
             'ticket_number' => $this->ticket->ticket_number,
             'status' => $this->ticket->status,
             'assignments' => $this->ticket->assignments()->with('table')->get(),
